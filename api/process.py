@@ -32,7 +32,7 @@ def process(path:str,img_name:str)->str:
         tp=(xmin, ymin, xmax, ymax)
         lst[1].append(tp)
     dic[img_name]=lst
-    print(dic)
+    # print(dic)
     return dic
 
 if __name__ == '__main__':

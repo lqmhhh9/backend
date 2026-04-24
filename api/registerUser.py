@@ -27,26 +27,26 @@ def registerUser():
         }), 400
 
     status = insert_user(username, password)
-
+    # code==1 success
     if status == "success":
         return jsonify({
-            "code": 200,
+            "code": 1,
             "msg": "register success",
             "data": {
                 "username": username
             }
         })
-
+    # code==-1 exist
     if status == "exists":
         return jsonify({
-            "code": 409,
+            "code": -1,
             "msg": "username already exists"
-        }), 409
-
+        })
+    # code==0 failed
     return jsonify({
-        "code": 500,
+        "code": 0,
         "msg": "register failed"
-    }), 500
+    })
 
 
 def insert_user(username, password):
