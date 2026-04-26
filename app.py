@@ -6,6 +6,8 @@ import config
 from api.upload import upload_bp
 from api.login import login_bp
 from api.registerUser import registerUser_bp
+from api.history import history_bp
+from api.result import result_bp
 def create_app():
     """
     Flask 应用工厂函数
@@ -22,6 +24,8 @@ def create_app():
     app.register_blueprint(upload_bp, url_prefix='/api/upload')
     app.register_blueprint(login_bp, url_prefix='/api/login')
     app.register_blueprint(registerUser_bp, url_prefix='/api/registerUser')
+    app.register_blueprint(history_bp, url_prefix='/api/history')
+    app.register_blueprint(result_bp, url_prefix='/api/result')
     # 健康检查接口（测试服务是否启动）
     @app.route('/')
     def index():

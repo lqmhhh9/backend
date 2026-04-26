@@ -51,9 +51,9 @@ def upload():
 
     yolo_result=predict(save_path)
     insert_result(image_id,yolo_result)
-    shutil.rmtree("runs")
-    os.remove(f"result/result_{image_id}.jpg")
-    os.remove(f"images/{image_id}.jpg")
+    # shutil.rmtree("runs")
+    # os.remove(f"result/result_{image_id}.jpg")
+    # os.remove(f"images/{image_id}.jpg")
     return jsonify({
         "code": 200,
         "message": "upload success",

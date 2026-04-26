@@ -83,3 +83,7 @@ def efficientnet_predict(dic):
         print(f"✅ 已保存: {save_path}")
 
     return save_root
+
+if __name__ == '__main__':
+    dic= {'1777198056077_root.jpg': [['E:\\xuexi\\python\\bishe\\backend\\Net\\EfficientNet_b0\\images\\0.jpg', 'E:\\xuexi\\python\\bishe\\backend\\Net\\EfficientNet_b0\\images\\1.jpg'], [(223, 167, 464, 414), (123, 356, 407, 640)]]}
+    efficientnet_predict(dic)
