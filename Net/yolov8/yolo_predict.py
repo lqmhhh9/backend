@@ -1,5 +1,6 @@
-from numpy.distutils.log import good
 from ultralytics import YOLO
+from numpy.distutils.log import good
+
 
 import os
 
@@ -45,6 +46,8 @@ def yolo_predict(path):
         else:
             good+=1
     conf_sum/=orange_num
+
+
     return{"good":good,"bad":bad,"orange_num":orange_num,"conf":conf_sum}
 
 

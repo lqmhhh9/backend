@@ -49,11 +49,11 @@ def upload():
             "message": "insert record failed"
         }), 500
 
-    yolo_result=predict(save_path)
-    insert_result(image_id,yolo_result)
-    # shutil.rmtree("runs")
-    # os.remove(f"result/result_{image_id}.jpg")
-    # os.remove(f"images/{image_id}.jpg")
+    yolo_result,ENet_result=predict(save_path)
+    insert_result(image_id,yolo_result,ENet_result)
+    shutil.rmtree("runs")
+    os.remove(f"result/result_{image_id}.jpg")
+    os.remove(f"images/{image_id}.jpg")
     return jsonify({
         "code": 200,
         "message": "upload success",
@@ -65,7 +65,7 @@ def upload():
         }
     })
 
-def insert_result(image_id, yolo_result):
+def insert_result(image_id, yolo_result,ENet_result):
     conn = None
     cursor = None
     try:
@@ -78,14 +78,15 @@ def insert_result(image_id, yolo_result):
         )
         cursor = conn.cursor()
         print("yolo_result:",yolo_result)
-        r=json.dumps(yolo_result, ensure_ascii=False)
-        print("r:",r)
+        yolo_result=json.dumps(yolo_result, ensure_ascii=False)
+        ENet_result = json.dumps(ENet_result, ensure_ascii=False)
+
         cursor.execute(
             """
-            INSERT INTO result (image_id, yolo_result)
-            VALUES (%s, %s)
+            INSERT INTO result (image_id, yolo_result,ENet_result)
+            VALUES (%s, %s,%s)
             """,
-            (image_id, r)
+            (image_id, yolo_result,ENet_result)
         )
         conn.commit()
         return "success"

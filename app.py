@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,send_from_directory
 from flask_cors import CORS
 import config
 
@@ -8,6 +8,8 @@ from api.login import login_bp
 from api.registerUser import registerUser_bp
 from api.history import history_bp
 from api.result import result_bp
+
+from api.file import file_bp
 def create_app():
     """
     Flask 应用工厂函数
@@ -26,6 +28,8 @@ def create_app():
     app.register_blueprint(registerUser_bp, url_prefix='/api/registerUser')
     app.register_blueprint(history_bp, url_prefix='/api/history')
     app.register_blueprint(result_bp, url_prefix='/api/result')
+
+    app.register_blueprint(file_bp, url_prefix='/api/file')
     # 健康检查接口（测试服务是否启动）
     @app.route('/')
     def index():
@@ -35,6 +39,10 @@ def create_app():
         }
 
     return app
+
+    @app.route('/record_images/<path:filename>')
+    def record_images(filename):
+        return send_from_directory('record', filename)
 
 
 if __name__ == '__main__':

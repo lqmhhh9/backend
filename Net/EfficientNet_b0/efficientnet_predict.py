@@ -51,7 +51,9 @@ def efficientnet_predict(dic):
         # 读取原图
         image = Image.open(original_path).convert("RGB")
         draw = ImageDraw.Draw(image)
-
+        orange_no=0
+        orange_half=0
+        orange_all=0
         for crop_path, box in zip(crop_paths, boxes):
 
             try:
@@ -62,7 +64,15 @@ def efficientnet_predict(dic):
                 with torch.no_grad():
                     output = model(input_tensor)
                     pred = torch.argmax(output, dim=1).item()
+                    print("pred:", pred)
                     label = class_names[pred]
+                    if pred == 0:
+                        orange_half+=1
+                    if pred == 1:
+                        orange_all+=1
+                    if pred == 2:
+                        orange_no+=1
+
 
                 xmin, ymin, xmax, ymax = box
 
@@ -82,8 +92,9 @@ def efficientnet_predict(dic):
         image.save(save_path)
         print(f"✅ 已保存: {save_path}")
 
-    return save_root
+    return {"orange_half": orange_half,"orange_all": orange_all,"orange_no": orange_no}
 
 if __name__ == '__main__':
-    dic= {'1777198056077_root.jpg': [['E:\\xuexi\\python\\bishe\\backend\\Net\\EfficientNet_b0\\images\\0.jpg', 'E:\\xuexi\\python\\bishe\\backend\\Net\\EfficientNet_b0\\images\\1.jpg'], [(223, 167, 464, 414), (123, 356, 407, 640)]]}
-    efficientnet_predict(dic)
+    dic= {'1777272236156_root.jpg': [['E:\\xuexi\\python\\bishe\\backend\\Net\\EfficientNet_b0\\images\\0.jpg', 'E:\\xuexi\\python\\bishe\\backend\\Net\\EfficientNet_b0\\images\\1.jpg'], [(223, 167, 464, 414), (123, 356, 407, 640)]]}
+    dic=efficientnet_predict(dic)
+    print(dic)
